@@ -8,8 +8,8 @@ const WelcomeMessage = () => {
     <View>
       <Text style={styles.title}>Olá!</Text>
       <Text style={styles.message}>
-        Para começar a usar o Smart Money, você precisa informar o saldo atual.
-        Vamos lá?
+        Bem vindo ao seu app de finança pessoal.{'\n'}
+        Acesse o link e saiba mais: https://c3rinnovation.com/
       </Text>
     </View>
   );

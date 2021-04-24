@@ -3,7 +3,6 @@ import {getRealm} from './Realm';
 import {getUUID} from './UUID';
 
 export const saveEntries = async (value, entry = {}) => {
-  console.log('saveEntries ::', value);
   let data = {};
 
   try {
@@ -46,8 +45,6 @@ export const getEntries = async (days, category) => {
     realm = realm.filtered('category == $0', category);
   }
   const entries = realm.sorted('entryAt', true);
-
-  console.log('getEntries', entries);
   return entries;
 };
 

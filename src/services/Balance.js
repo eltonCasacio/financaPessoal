@@ -1,14 +1,21 @@
-import {getRealm} from './Realm';
 import _ from 'lodash';
 import moment from '../vendors/moment';
 
+import {getRealm} from './Realm';
 import {getUUID} from './UUID';
+
 import Colors from '../styles/Colors';
 
-export const getBalance = async () => {
+export const getBalance = async (untilDays = 0) => {
   const realm = await getRealm();
 
   let entries = realm.objects('Entry');
+
+  if (untilDays > 0) {
+    const date = moment().subtract(untilDays, 'days').toDate();
+
+    entries = entries.filtered('entryAt < $0', date);
+  }
 
   if (entries.length > 0) {
     return entries
@@ -68,7 +75,7 @@ export const getBalanceSumByCategory = async (days, showOthers = true) => {
     .filter(({amount}) => amount > 0)
     .orderBy('amount', 'desc');
 
-  const othersLimit = 4;
+  const othersLimit = 3;
 
   if (showOthers && _(entries).size() > othersLimit) {
     const data1 = _(entries).slice(0, othersLimit);
@@ -84,5 +91,6 @@ export const getBalanceSumByCategory = async (days, showOthers = true) => {
 
     entries = [...data1, ...data2];
   }
+
   return entries;
 };
