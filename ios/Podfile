@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'smartMoney' do
+target 'FinancaPessoal' do
   config = use_native_modules!
 
   use_react_native!(
@@ -20,7 +20,7 @@ target 'smartMoney' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
-  target 'smartMoneyTests' do
+  target 'FinancaPessoalTests' do
     inherit! :complete
     # Pods for testing
   end
