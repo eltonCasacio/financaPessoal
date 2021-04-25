@@ -1,33 +1,36 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import React, {useState} from 'react';
+
+import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/Colors';
+import {styles} from './styles';
+
+import {createCategories, deleteCategory} from '../../services/Categories';
+import {randomColor} from '../../utils';
 
 import {
   ActionPrimaryButton,
-  ActionSecondaryButton,
+  ActionDefaultButton,
+  ActionDangerButton,
 } from '../../components/Core/ActionFooter';
 
-import {createCategories} from '../../services/Categories';
-import {randomColor} from '../../utils';
+import NewEntryCategoryPicker from '../NewEntry/NewEntryCategoryPicker';
 
 const NewCategory = ({navigation}) => {
-  const [name, setName] = React.useState('');
-  const [isCredit, setIsCredit] = React.useState(true);
-  const [isDebit, setIsDebit] = React.useState(false);
+  const [id, setId] = useState(null);
+  const [name, setName] = useState('');
+  const [color, setColor] = useState();
+  const [isCredit, setIsCredit] = useState(true);
+  const [isDebit, setIsDebit] = useState(false);
 
-  const save = async () => {
+  const [category, setCategory] = useState({id: null, name: 'Selecione'});
+
+  const onSave = async () => {
     if (name.trim()) {
-      const color = randomColor();
+      setColor(randomColor());
+
       try {
-        await createCategories({name, color, isCredit, isDebit});
+        await createCategories({id, name, color, isCredit, isDebit});
         navigation.navigate('NewEntry');
       } catch (error) {
         Alert.alert('Não foi possivel criar categoria');
@@ -36,7 +39,21 @@ const NewCategory = ({navigation}) => {
     }
   };
 
-  const editCategory = async () => {};
+  const onDelete = async () => {
+    if (category.id) {
+      deleteCategory(category);
+      navigation.navigate('NewEntry');
+    }
+  };
+
+  const onChangeCategory = async value => {
+    setCategory(value);
+    setId(value.id);
+    setName(value.name);
+    setColor(value.color);
+    setIsCredit(value.isCredit);
+    setIsDebit(value.isDebit);
+  };
 
   const togleCreditFebit = () => {
     setIsCredit(!isCredit);
@@ -70,51 +87,22 @@ const NewCategory = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <ActionPrimaryButton title="Adicionar" onPress={save} />
-        <ActionSecondaryButton
+      <NewEntryCategoryPicker
+        category={category}
+        debit={isDebit}
+        onChangeCategory={onChangeCategory}
+      />
+
+      <View style={styles.buttonActionContainer}>
+        <ActionPrimaryButton title="Adicionar" onPress={onSave} />
+        <ActionDefaultButton
           title="Cancelar"
           onPress={() => navigation.navigate('NewEntry')}
         />
+        <ActionDangerButton title="Excluir" onPress={onDelete} />
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-around',
-    paddingHorizontal: 20,
-    backgroundColor: Colors.background,
-  },
-  input: {
-    textAlign: 'center',
-    backgroundColor: Colors.champagneDark,
-    borderRadius: 15,
-    padding: 20,
-
-    color: Colors.background,
-    fontSize: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 20,
-  },
-  button: {
-    alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: Colors.asphalt,
-    width: 150,
-  },
-  buttonText: {
-    color: Colors.white,
-    fontSize: 18,
-  },
-  buttonActived: {
-    backgroundColor: Colors.blue,
-  },
-});
 
 export default NewCategory;

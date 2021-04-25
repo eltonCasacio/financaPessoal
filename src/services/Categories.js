@@ -5,17 +5,19 @@ export const createCategories = async category => {
   const realm = await getRealm();
   let data = {};
 
-  const categories = realm.objects('Category');
-  const categoriesFiltered = categories.filtered('name == $0', category.name);
+  if (!category.id) {
+    const categories = realm.objects('Category');
+    const categoriesFiltered = categories.filtered('name == $0', category.name);
 
-  if (categoriesFiltered.length > 0) {
-    return 'Essa Categoria já existe';
+    if (categoriesFiltered.length > 0) {
+      return 'Essa Categoria já existe';
+    }
   }
 
   try {
     realm.write(() => {
       data = {
-        id: getUUID(),
+        id: category.id || getUUID(),
         name: category.name,
         color: category.color,
         isDebit: category.isDebit,
@@ -53,4 +55,19 @@ export const getCreditCategories = async () => {
 export const getInitCategories = async () => {
   const realm = await getRealm();
   return realm.objects('Category').filtered('isInit = true')['0'];
+};
+
+export const deleteCategory = async category => {
+  const realm = await getRealm();
+
+  // try {
+  //   realm.write(() => {
+  //     realm.delete(category);
+  //   });
+  // } catch (error) {
+  //   throw {
+  //     msg: `deleteCategory :: Erro ao remover categoria
+  //   ${JSON.stringify(error)}`,
+  //   };
+  // }
 };

@@ -6,7 +6,7 @@ import {styles} from './styles';
 import ActionFooter, {
   ActionPrimaryButton,
   ActionSecondaryButton,
-  ActionCreateButton,
+  ActionDefaultButton,
 } from '../../components/Core/ActionFooter';
 import BalanceLabel from '../../components/BalanceLabel';
 
@@ -111,7 +111,7 @@ const NewEntry = ({navigation}) => {
           />
           <ActionSecondaryButton title="Cancelar" onPress={goBack} />
         </ActionFooter>
-        <ActionCreateButton
+        <ActionDefaultButton
           title="Criar Categoria"
           onPress={handleNewCategory}
         />

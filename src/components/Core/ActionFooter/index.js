@@ -27,10 +27,18 @@ export const ActionSecondaryButton = ({title, onPress}) => {
   );
 };
 
-export const ActionCreateButton = ({title, onPress}) => {
+export const ActionDefaultButton = ({title, onPress}) => {
   return (
     <TouchableOpacity style={styles.createButton} onPress={onPress}>
       <Text style={styles.createButtonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export const ActionDangerButton = ({title, onPress}) => {
+  return (
+    <TouchableOpacity style={styles.dangerButton} onPress={onPress}>
+      <Text style={styles.dangerButtonText}>{title}</Text>
     </TouchableOpacity>
   );
 };

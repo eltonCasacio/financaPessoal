@@ -43,4 +43,17 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.blue,
   },
+  dangerButtonText: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: Colors.red,
+  },
+  dangerButton: {
+    borderRadius: 150,
+    borderWidth: 1,
+    borderColor: Colors.red,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+  },
 });
