@@ -20,11 +20,13 @@ const Welcome = ({navigation}) => {
   const [amount, setAmount] = useState(0);
 
   const onSavePress = () => {
-    saveEntries({
-      amount: parseFloat(amount),
-      isInit: true,
-      category: initCategories,
-    });
+    if (amount > 0) {
+      saveEntries({
+        amount: parseFloat(amount),
+        isInit: true,
+        category: initCategories,
+      });
+    }
 
     setInitialized();
     navigation.navigate('Main');
@@ -38,7 +40,7 @@ const Welcome = ({navigation}) => {
       <WelcomeMessage />
       <WelcomeBalanceInput value={amount} onChangeValue={setAmount} />
       <ActionFooter>
-        <ActionPrimaryButton title="Continuar" onPress={onSavePress} />
+        <ActionPrimaryButton title="Continuar" onPress={() => onSavePress()} />
       </ActionFooter>
     </View>
   );

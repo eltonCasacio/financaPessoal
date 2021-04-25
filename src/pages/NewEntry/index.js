@@ -67,6 +67,10 @@ const NewEntry = ({navigation}) => {
     goBack();
   };
 
+  const handleNewCategory = () => {
+    navigation.navigate('NewCategory');
+  };
+
   return (
     <View style={styles.container}>
       <BalanceLabel />
@@ -105,6 +109,10 @@ const NewEntry = ({navigation}) => {
         />
         <ActionSecondaryButton title="Cancelar" onPress={goBack} />
       </ActionFooter>
+      <ActionPrimaryButton
+        title="Criar Categoria"
+        onPress={handleNewCategory}
+      />
     </View>
   );
 };
