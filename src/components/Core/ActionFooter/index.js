@@ -27,4 +27,12 @@ export const ActionSecondaryButton = ({title, onPress}) => {
   );
 };
 
+export const ActionCreateButton = ({title, onPress}) => {
+  return (
+    <TouchableOpacity style={styles.createButton} onPress={onPress}>
+      <Text style={styles.createButtonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
 export default ActionFooter;

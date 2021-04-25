@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/Colors';
@@ -15,41 +16,31 @@ import {
 } from '../../components/Core/ActionFooter';
 
 import {createCategories} from '../../services/Categories';
+import {randomColor} from '../../utils';
 
 const NewCategory = ({navigation}) => {
   const [name, setName] = React.useState('');
-  const [credit, setCredit] = React.useState(true);
-  const [debit, setDebit] = React.useState(false);
-
-  const randomColor = () => {
-    let r = Math.random() * 255;
-    let g = Math.random() * 255;
-    let b = Math.random() * 255;
-
-    return `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
-  };
+  const [isCredit, setIsCredit] = React.useState(true);
+  const [isDebit, setIsDebit] = React.useState(false);
 
   const save = async () => {
     if (name.trim()) {
-      let newCategory = {
-        name: name,
-        color: randomColor(),
-        isCredit: credit,
-        isDebit: debit,
-      };
-
+      const color = randomColor();
       try {
-        await createCategories(newCategory);
+        await createCategories({name, color, isCredit, isDebit});
         navigation.navigate('NewEntry');
       } catch (error) {
+        Alert.alert('Não foi possivel criar categoria');
         console.error('NewCategory :: ERRO criar categoria');
       }
     }
   };
 
+  const editCategory = async () => {};
+
   const togleCreditFebit = () => {
-    setCredit(!credit);
-    setDebit(!debit);
+    setIsCredit(!isCredit);
+    setIsDebit(!isDebit);
   };
 
   return (
@@ -64,14 +55,14 @@ const NewCategory = ({navigation}) => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={[styles.button, credit ? styles.buttonActived : '']}
+            style={[styles.button, isCredit ? styles.buttonActived : '']}
             onPress={togleCreditFebit}>
             <Icon name="attach-money" size={30} color={Colors.white} />
             <Text style={styles.buttonText}>Credito</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.button, debit ? styles.buttonActived : '']}
+            style={[styles.button, isDebit ? styles.buttonActived : '']}
             onPress={togleCreditFebit}>
             <Icon name="money-off" size={30} color={Colors.white} />
             <Text style={styles.buttonText}>Debito</Text>
@@ -99,7 +90,7 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.champagneDark,
     borderRadius: 15,
     padding: 20,
 

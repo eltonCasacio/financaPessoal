@@ -6,6 +6,7 @@ import {styles} from './styles';
 import ActionFooter, {
   ActionPrimaryButton,
   ActionSecondaryButton,
+  ActionCreateButton,
 } from '../../components/Core/ActionFooter';
 import BalanceLabel from '../../components/BalanceLabel';
 
@@ -102,17 +103,19 @@ const NewEntry = ({navigation}) => {
         </View>
       </View>
 
-      <ActionFooter>
-        <ActionPrimaryButton
-          title={entry.id ? 'Salvar' : 'Adicionar'}
-          onPress={() => isValid() && save()}
+      <View style={styles.footer}>
+        <ActionFooter>
+          <ActionPrimaryButton
+            title={entry.id ? 'Salvar' : 'Adicionar'}
+            onPress={() => isValid() && save()}
+          />
+          <ActionSecondaryButton title="Cancelar" onPress={goBack} />
+        </ActionFooter>
+        <ActionCreateButton
+          title="Criar Categoria"
+          onPress={handleNewCategory}
         />
-        <ActionSecondaryButton title="Cancelar" onPress={goBack} />
-      </ActionFooter>
-      <ActionPrimaryButton
-        title="Criar Categoria"
-        onPress={handleNewCategory}
-      />
+      </View>
     </View>
   );
 };
