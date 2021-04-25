@@ -7,17 +7,18 @@ import useBalanceSumByDate from '../../../hooks/useBalanceSumByDate';
 const BalancePanelChart = () => {
   const [balanceSum] = useBalanceSumByDate();
 
+  console.log('BalancePanelChart :: ', balanceSum);
   return (
     <View style={styles.container}>
       <AreaChart
         style={styles.chart}
         data={balanceSum}
+        contentInset={{top: 0, bottom: 0}}
         svg={{
           fill: 'rgba(0,0,0, .05)',
           stroke: 'rgba(0,0,0, .1)',
           strokeWidth: 1,
         }}
-        contentInset={{top: 0, bottom: 0}}
       />
     </View>
   );

@@ -23,7 +23,7 @@ export const getBalance = async (untilDays = 0) => {
       .reduce((sum, amount) => sum + amount);
   }
 
-  return Number(0).toFixed(2);
+  return Number(0);
 };
 
 export const getBalanceSumByDate = async days => {

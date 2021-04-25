@@ -78,11 +78,14 @@ const NewCategory = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ActionPrimaryButton title="Adicionar" onPress={save} />
-      <ActionSecondaryButton
-        title="Cancelar"
-        onPress={() => navigation.navigate('NewEntry')}
-      />
+
+      <View style={styles.buttonContainer}>
+        <ActionPrimaryButton title="Adicionar" onPress={save} />
+        <ActionSecondaryButton
+          title="Cancelar"
+          onPress={() => navigation.navigate('NewEntry')}
+        />
+      </View>
     </View>
   );
 };
@@ -96,11 +99,11 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'center',
-    backgroundColor: Colors.asphalt,
+    backgroundColor: Colors.white,
     borderRadius: 15,
     padding: 20,
 
-    color: Colors.white,
+    color: Colors.background,
     fontSize: 20,
   },
   buttonContainer: {
@@ -109,12 +112,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   button: {
-    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: Colors.asphalt,
-    width: 130,
-    height: 60,
+    width: 150,
   },
   buttonText: {
     color: Colors.white,
