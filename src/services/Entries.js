@@ -50,13 +50,14 @@ export const getEntries = async (days, category) => {
 
 export const deleteEntries = async entry => {
   const realm = await getRealm();
+
   try {
     realm.write(() => {
       realm.delete(entry);
     });
   } catch (error) {
     throw {
-      msg: `deleteEntries :: Erro ao remover cliente 
+      msg: `deleteEntries :: Erro ao remover cliente
     ${JSON.stringify(error)}`,
     };
   }

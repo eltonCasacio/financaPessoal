@@ -65,7 +65,7 @@ const NewCategory = ({navigation}) => {
       <View>
         <TextInput
           style={styles.input}
-          placeholder="name da categoria"
+          placeholder="nome da categoria"
           onChangeText={text => setName(text)}
           value={name}
         />

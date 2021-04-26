@@ -1,5 +1,6 @@
 import {getUUID} from './UUID';
 import {getRealm} from './Realm';
+import {deleteEntries} from './Entries';
 
 export const createCategories = async category => {
   const realm = await getRealm();
@@ -60,14 +61,19 @@ export const getInitCategories = async () => {
 export const deleteCategory = async category => {
   const realm = await getRealm();
 
-  // try {
-  //   realm.write(() => {
-  //     realm.delete(category);
-  //   });
-  // } catch (error) {
-  //   throw {
-  //     msg: `deleteCategory :: Erro ao remover categoria
-  //   ${JSON.stringify(error)}`,
-  //   };
-  // }
+  const entries = realm
+    .objects('Entry')
+    .filtered('description == $0', category.name);
+
+  try {
+    realm.write(() => {
+      entries.map(item => deleteEntries(item));
+      realm.delete(category);
+    });
+  } catch (error) {
+    throw {
+      msg: `deleteCategory :: Erro ao remover categoria
+    ${JSON.stringify(error)}`,
+    };
+  }
 };

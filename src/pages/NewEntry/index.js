@@ -105,15 +105,15 @@ const NewEntry = ({navigation}) => {
 
       <View style={styles.footer}>
         <ActionFooter>
-          <ActionPrimaryButton
-            title={entry.id ? 'Salvar' : 'Adicionar'}
-            onPress={() => isValid() && save()}
+          <ActionDefaultButton
+            title="Criar Categoria"
+            onPress={handleNewCategory}
           />
           <ActionSecondaryButton title="Cancelar" onPress={goBack} />
         </ActionFooter>
-        <ActionDefaultButton
-          title="Criar Categoria"
-          onPress={handleNewCategory}
+        <ActionPrimaryButton
+          title={entry.id ? 'Salvar' : 'Adicionar'}
+          onPress={() => isValid() && save()}
         />
       </View>
     </View>
